@@ -7,9 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/dropdown.css" rel="stylesheet">
 
     <!-- Script -->
     <script src="js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="js/autosuggest.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            var oTextbox = new AutoSuggestControl(document.getElementById("q"), new SuggestionProvider()); 
+        }
+    </script>
 
   </head>
 
