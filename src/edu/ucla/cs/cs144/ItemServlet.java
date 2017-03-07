@@ -50,7 +50,6 @@ public class ItemServlet extends HttpServlet implements Servlet {
 				}
             	request.setAttribute("itemName", nameBuilder.toString());
 
-
             	// Category
             	Vector<String> categoryVector = parseXML(itemData, "Category", "Item");
             	StringBuilder categoryBuilder = new StringBuilder("");
@@ -151,6 +150,9 @@ public class ItemServlet extends HttpServlet implements Servlet {
 				}
             	request.setAttribute("itemEnds", endsBuilder.toString());
 
+            	// Seller
+            	Vector<Seller> sellerVector = parseXMLSeller(itemData);
+            	request.setAttribute("itemSeller", sellerVector.get(0));
 
             	// Description
             	Vector<String> descriptionVector = parseXML(itemData, "Description", "Item");
@@ -217,6 +219,8 @@ public class ItemServlet extends HttpServlet implements Servlet {
 	    	bidder = new Bidder();
 	    	NodeList bidderList = element.getElementsByTagName("Bidder");
 	    	Element bidderLine = (Element) bidderList.item(i);
+	    	bidder.userID = bidderLine.getAttribute("UserID");
+	    	bidder.rating = bidderLine.getAttribute("Rating");
 	    	NodeList locationList = bidderLine.getElementsByTagName("Location");
 	    	Element locationLine = (Element) locationList.item(0);
 		    bidder.location = getCharacterDataFromElement(locationLine);
@@ -287,6 +291,31 @@ public class ItemServlet extends HttpServlet implements Servlet {
 	    dataVector.addElement(getCharacterDataFromElement(line));
 
 	    return dataVector;
+  	}
+
+  	public Vector<Seller> parseXMLSeller(String itemData) throws Exception 
+    {	
+    	// Parses XML into map
+	    DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+	    InputSource is = new InputSource();
+	    is.setCharacterStream(new StringReader(itemData));
+
+	    //Aquire item
+	    Document doc = db.parse(is);
+	    NodeList nodes = doc.getElementsByTagName("Item");
+	    Element element = (Element) nodes.item(0);
+
+	    Vector<Seller> sellerVector = new Vector<Seller>();
+	    Seller seller = new Seller();
+	    NodeList tag = element.getElementsByTagName("Seller");
+	    for(int i = 0; i < tag.getLength(); i++){
+	    	Element line = (Element) tag.item(i);
+	    	seller.userID = line.getAttribute("UserID");
+	    	seller.rating = line.getAttribute("Rating");
+		    sellerVector.addElement(seller);
+	    }
+
+	    return sellerVector;
   	}
 
   	public static String getCharacterDataFromElement(Element e) {

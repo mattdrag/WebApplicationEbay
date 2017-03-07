@@ -1,6 +1,7 @@
 <%@ page import="edu.ucla.cs.cs144.Bid" %>
 <%@ page import="edu.ucla.cs.cs144.Bidder" %>
 <%@ page import="edu.ucla.cs.cs144.Location" %>
+<%@ page import="edu.ucla.cs.cs144.Seller" %>
 <%@ page import="java.util.Vector" %>
 <%@ page import="java.util.Enumeration" %>
 
@@ -47,6 +48,7 @@
     String itemCountry = (String) request.getAttribute("itemCountry");
     String itemStarted = (String) request.getAttribute("itemStarted");
     String itemEnds = (String) request.getAttribute("itemEnds");
+    Seller itemSeller = (Seller) request.getAttribute("itemSeller");
     String itemDescription = (String) request.getAttribute("itemDescription");
     %>
 
@@ -57,34 +59,47 @@
 
         <div class="col-lg-8">
 
-          <h2>Item Name: &quot;<%= itemName %>&quot;:</h2>
+          <h2>&quot;<%= itemName %>&quot;</h2>
           <div class="list-group">
             <ul>
-                <li><b class="list-group-item">ID: <%= itemID %></b></li>
-                <li><b class="list-group-item">Category: <%= itemCategory %></b></li>
-                <li><b class="list-group-item">Currently: <%= itemCurrently %></b></li>
-                <li><b class="list-group-item">Buy Price: <%= itemBuy_Price %></b></li>
-                <li><b class="list-group-item">First Bid: <%= itemFirst_Bid %></b></li>
-                <li><b class="list-group-item">Number of Bids: <%= itemNumber_of_Bids %></b></li>
+                <li><p class="list-group-item">
+                <b>Seller:</b> <%= itemSeller.userID %><br>
+                <b>Rating:</b> <%= itemSeller.rating %>
+                </p></li>
+
+                <li><p class="list-group-item">
+                <b>Price Currently:</b> <%= itemCurrently %><br>
+                <b>Buyout Price:</b> <%= itemBuy_Price %><br>
+                <b>First Bid:</b> <%= itemFirst_Bid %><br>
+                <b>Number of Bids:</b> <%= itemNumber_of_Bids %>
+                </p></li>
 
                 <% for (Enumeration e = itemBids.elements(); e.hasMoreElements();) { 
                   Bid aBid = (Bid) e.nextElement();
                 %>
-                <li><p><b class="list-group-item">
-                Bidder location: <%= aBid.bidder.location %><br>
-                Bidder country: <%= aBid.bidder.country %><br>
-                Bid time: <%= aBid.time %><br>
-                Bid amount: <%= aBid.amount %>
-                </b></p></li>
+                <li><p class="list-group-item">
+                <b>Bidder:</b> <%= aBid.bidder.userID %><br>
+                <b>Rating:</b> <%= aBid.bidder.rating %><br>
+                <b>Location:</b> <%= aBid.bidder.location %><br>
+                <b>Country:</b> <%= aBid.bidder.country %><br>
+                <b>Time of Bid:</b> <%= aBid.time %><br>
+                <b>Bid Amount:</b> <%= aBid.amount %>
+                </p></li>
               <% } %>
-                <li><b class="list-group-item">Country: <%= itemCountry %></b></li>
-                <li><b class="list-group-item">Started: <%= itemStarted %></b></li>
-                <li><b class="list-group-item">Ends: <%= itemEnds %></b></li>
-                <li><b class="list-group-item">Description: <%= itemDescription %></b></li>
-                 <li><b class="list-group-item">Location: <%= itemLocation.value %><br>
-                Latitude: <%= itemLocation.latitude %><br>
-                Longitude: <%= itemLocation.longitude %>
-                </b></li>
+
+                <li><p class="list-group-item">
+                <b>Bid Started:</b> <%= itemStarted %><br>
+                <b>Bid Ends:</b> <%= itemEnds %>
+                </p></li>
+
+                <li><p class="list-group-item"><b>Description:</b> <%= itemDescription %></p></li>
+                <li><p class="list-group-item"><b>Category:</b> <%= itemCategory %></p></li>
+                <li><p class="list-group-item">
+                <b>Country:</b> <%= itemCountry %><br>
+                <b>Location:</b> <%= itemLocation.value %><br>
+                <b>Latitude:</b> <%= itemLocation.latitude %><br>
+                <b>Longitude:</b> <%= itemLocation.longitude %>
+                </p></li>
                 <div id="map_canvas" style="width:500px; height:500px"></div> 
             </ul>
           </div>
