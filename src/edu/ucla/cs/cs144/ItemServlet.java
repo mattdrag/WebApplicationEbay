@@ -112,19 +112,12 @@ public class ItemServlet extends HttpServlet implements Servlet {
             	request.setAttribute("itemBids", bidsVector);
 
             	// Location
-            	Vector<String> locationVector = parseXML(itemData, "Location", "Item");
-            	StringBuilder locationBuilder = new StringBuilder("");
-				// Traverse entire list, printing them all out
-				for (Enumeration e = locationVector.elements(); e.hasMoreElements();)
-				{
-					String locationString = (String) e.nextElement();
-					locationBuilder.append(locationString);
-				}
-            	request.setAttribute("itemLocation", locationBuilder.toString());
+            	Vector<Location> locationVector = parseXMLLocation(itemData);
+            	request.setAttribute("itemLocation", locationVector.get(0));
 
 
             	// Country
-            	Vector<String> countryVector = parseXML(itemData, "Country", "Item");
+            	Vector<String> countryVector = parseXMLLastOf(itemData, "Country", "Item");
             	StringBuilder countryBuilder = new StringBuilder("");
 				// Traverse entire list, printing them all out
 				for (Enumeration e = countryVector.elements(); e.hasMoreElements();)
@@ -246,6 +239,54 @@ public class ItemServlet extends HttpServlet implements Servlet {
 	    }
 
 	    return bidVector;
+  	}
+
+  	public Vector<Location> parseXMLLocation(String itemData) throws Exception 
+    {	
+    	// Parses XML into map
+	    DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+	    InputSource is = new InputSource();
+	    is.setCharacterStream(new StringReader(itemData));
+
+	    //Aquire item
+	    Document doc = db.parse(is);
+	    NodeList nodes = doc.getElementsByTagName("Item");
+	    Element element = (Element) nodes.item(0);
+
+	    Vector<Location> dataVector = new Vector<Location>();
+	    Location location = new Location();
+
+	    NodeList tag = element.getElementsByTagName("Location");
+	    for(int i = 0; i < tag.getLength(); i++){
+	    	Element line = (Element) tag.item(i);
+	    	location.latitude = line.getAttribute("Latitude");
+	    	location.longitude = line.getAttribute("Longitude");
+	    	location.value = getCharacterDataFromElement(line);
+	    }
+	    dataVector.addElement(location);
+
+	    return dataVector;
+  	}
+
+  	public Vector<String> parseXMLLastOf(String itemData, String itemTag, String parentName) throws Exception 
+    {	
+    	// Parses XML into map
+	    DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+	    InputSource is = new InputSource();
+	    is.setCharacterStream(new StringReader(itemData));
+
+	    //Aquire item
+	    Document doc = db.parse(is);
+	    NodeList nodes = doc.getElementsByTagName(parentName);
+	    Element element = (Element) nodes.item(0);
+
+	    Vector<String> dataVector = new Vector<String>();
+
+	    NodeList tag = element.getElementsByTagName(itemTag);
+	    Element line = (Element) tag.item(tag.getLength() - 1);
+	    dataVector.addElement(getCharacterDataFromElement(line));
+
+	    return dataVector;
   	}
 
   	public static String getCharacterDataFromElement(Element e) {
