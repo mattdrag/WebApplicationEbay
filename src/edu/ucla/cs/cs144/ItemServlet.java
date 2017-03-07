@@ -167,7 +167,7 @@ public class ItemServlet extends HttpServlet implements Servlet {
             	request.getRequestDispatcher("/item.jsp").forward(request, response);
             }
         } catch (Exception e) {
-            request.getRequestDispatcher("/item.jsp").forward(request, response);
+            request.getRequestDispatcher("/error.html").forward(request, response);
         }
     }
 
