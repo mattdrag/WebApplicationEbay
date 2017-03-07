@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-12">
+        <h2>Search for an item</h2>
+        <form class="form-inline" role="form" action="/search" method="GET"
+        <form action="/search" method="GET">
+            <div class="form-group">
+                <label class="sr-only" for="q">Query</label>
+                <input class="form-control" type="text" id="q" name="q" placeholder="Search" autocomplete="off">
+            </div> 
+            <input class="btn btn-default" type="submit" value="Search">
+            <input type="hidden" name="numResultsToSkip" value="0">
+            <input type="hidden" name="numResultsToReturn" value="20">
+        </form>
+        </div>
+      </div>
+
+    </div><!-- /.container -->
+
+  </body>
+</html>

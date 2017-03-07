@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Search Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Script -->
+    <script src="js/bootstrap.min.js"></script>
+
+  </head>
+
+  <body>
+
+
+  <div class="col-lg-8">
+    <h2>Search for an Item</h2>
+    <form class="form-inline" role="form" action="/eBay/search" method="GET"
+    <form action="/eBay/search" method="GET">
+      <div class="form-group">
+        <label class="sr-only" for="q">Query</label>
+        <input class="form-control" type="text" id="q" name="q" placeholder="Search" autocomplete="of">
+      </div> 
+      <input class="btn btn-default" type="submit" value="Search">
+      <input type="hidden" name="numResultsToSkip" value="0">
+      <input type="hidden" name="numResultsToReturn" value="20">
+    </form>
+  </div>
+
+
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Item Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Script -->
+    <script src="js/bootstrap.min.js"></script>
+
+  </head>
+
+  <body>
+
+      <div class="col-lg-8">
+        <h2>Input the Item ID</h2>
+        <form class="form-inline" role="form" action="/eBay/item" method="GET">
+	        <div class="form-group">
+	            <label class="sr-only" for="ID">Item ID</label>
+	            <input class="form-control" type="text" id="ID" name="ID" placeholder="Find">
+	        </div>
+	        <input class="btn btn-default" type="submit" value="Find">
+        </form>
+      </div>
+
+  </body>
+</html>
